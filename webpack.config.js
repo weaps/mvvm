@@ -1,11 +1,19 @@
 const path = require('path')
-const HtmlWeapackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
   mode: 'development',
   entry: './src/mvvm.js',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+      }),
+    ],
   },
   module: {
     rules: [
@@ -18,7 +26,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWeapackPlugin({
+    new HtmlWebpackPlugin({
       template: './index.html'
     })
   ]

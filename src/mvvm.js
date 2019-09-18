@@ -29,4 +29,5 @@ window.onload = function() {
       }
     }
   })
+  console.log(vm)
 }

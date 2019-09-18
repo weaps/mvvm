@@ -2,7 +2,7 @@ import util from './compile-util'
 class Compile {
   constructor(options) {
     // 判断当前传入的el是字符串还是node节点
-    this.el = util.isElementNode(options.$el) ? options.$el : document.querySelector(options.$el)            
+    this.el = util.isElementNode(options.$el) ? options.$el : document.querySelector(options.$el)
     this.data = options.$data
     // 判断如果能获取到这个元素，才进行编译
     if (this.el) {
@@ -78,7 +78,7 @@ const compileUtil = {
     let updaterFn = this.updater[`updater${type}`]
     updaterFn && updaterFn(node, this.getVmData(vm, value))
   },
-  // 表达式方法 {{data}} 
+  // 表达式方法 {{data}}
   expr(node, vm, value) {
     let updaterFn = this.updater['updaterExpression']
     updaterFn && updaterFn(node, this.getExpressionData(vm, value))
@@ -96,7 +96,7 @@ const compileUtil = {
     // 输入框更新
     updaterModel(node, value) {
       node.value = value
-    }, 
+    },
     // html更新
     updaterHtml() {}
   },
