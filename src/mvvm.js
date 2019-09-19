@@ -1,5 +1,6 @@
 import Observer from './observer/observer'
 import Compile from './compile/cpmpile'
+import Dep from './dep/dep'
 class MVVM {
   // MVVM桥梁作用，用于编译和观察监听
   constructor(options) {

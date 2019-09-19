@@ -1,4 +1,6 @@
 import util from './compile-util'
+import Watcher from '../watcher/watcher'
+import Dep from '../dep/dep'
 class Compile {
   constructor(options) {
     // 判断当前传入的el是字符串还是node节点
@@ -75,13 +77,19 @@ const compileUtil = {
   // 自定义指令方法集合，如：v-model、v-text、v-html、
   directive(node, vm, value, type) {
     type = type.slice(0,1).toUpperCase() + type.slice(1)
-    let updaterFn = this.updater[`updater${type}`]
-    updaterFn && updaterFn(node, this.getVmData(vm, value))
+    let fn = this.updater[`updater${type}`]
+    new Watcher(vm, value, (newVal) => {
+      fn && fn(node, this.getVmData(vm, newVal))
+    })
+    fn && fn(node, this.getVmData(vm, value))
   },
   // 表达式方法 {{data}}
   expr(node, vm, value) {
-    let updaterFn = this.updater['updaterExpression']
-    updaterFn && updaterFn(node, this.getExpressionData(vm, value))
+    this.getExprName(value)
+    // debugger
+    let fn = this.updater['updaterExpression']
+    new Watcher(vm)
+    fn && fn(node, this.getExpressionData(vm, value))
   },
   updater: {
     // 表达式更新 {{test}}
@@ -115,6 +123,10 @@ const compileUtil = {
     let data =  value.substring(2, len - 2)
     // 获取到name后，调用getVmData获取对应的数据，并返回
     return this.getVmData(vm, data)
+  },
+  getExprName(name) {
+    name = name.trim()
+    return name.substring(2, name.length - 2)
   }
 }
 export default Compile

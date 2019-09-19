@@ -12,7 +12,6 @@ class Observer {
        this.observer(data[key]) // 深度遍历，递归
      }
    })
-   // debugger
  }
   defineActive(obj, key, value) {
    let that = this
